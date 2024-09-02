@@ -1,0 +1,24 @@
+# Ignorar el archivo .env
+.env
+
+# Ignorar la carpeta de logs y todo su contenido
+logs/
+*.log
+
+# Ignorar la carpeta .venv
+.venv/
+
+# Ignorar archivos de Python bytecode
+__pycache__/
+*.py[cod]
+
+# Ignorar configuraciones de editor y sistema operativo
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Ignorar los paquetes instalados y el entorno virtual
+pip-wheel-metadata/
+*.egg-info/

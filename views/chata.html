@@ -1,0 +1,58 @@
+{% include 'layout/header.html' %}
+
+<div class="content">
+    <!-- Incluir el header -->
+    {% include 'layout/navbar.html' %}
+</div>
+
+<h1>Chat A</h1>
+<div id="chat-log"></div>
+<input type="text" id="chat-input" placeholder="Escribe tu mensaje...">
+<button id="send-button" onclick="sendMessage()" disabled>Enviar</button>
+
+<script>
+    // Función para obtener parámetros de la URL
+    function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+    }
+
+    // Obtener la IP automáticamente
+    let ip = window.location.hostname;
+
+    // Usar la variable socket_info pasada desde el servidor
+    const socketInfo = "{{ socket_info }}";
+
+    // Crear el WebSocket usando la IP detectada y el puerto de la variable socket_info
+    const socketA = new WebSocket(`ws://${ip}:${socketInfo}/A`);
+
+    // Deshabilitar el botón de envío hasta que la conexión esté abierta
+    const sendButton = document.getElementById('send-button');
+
+    socketA.onopen = function() {
+        console.log(`Conectado a WebSocket como Chat A en ws://${ip}:${socketInfo}`);
+        // Habilitar el botón de envío cuando la conexión esté abierta
+        sendButton.disabled = false;
+    };
+
+    socketA.onmessage = function(event) {
+        const chatLog = document.getElementById('chat-log');
+        chatLog.innerHTML += '<p>' + event.data + '</p>';
+        console.log(event.data)
+    };
+
+    function sendMessage() {
+        const message = document.getElementById('chat-input').value;
+        if (socketA.readyState === WebSocket.OPEN) {
+            socketA.send(JSON.stringify({
+                tipo: 'chat_privado',
+                destinatario_id: 'B',  // Enviar a Chat B
+                mensaje: message
+            }));
+        } else {
+            console.error('WebSocket no está en estado OPEN.');
+        }
+    }
+</script>
+
+{% include 'layout/footer.html' %}

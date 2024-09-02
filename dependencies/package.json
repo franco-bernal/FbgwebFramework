@@ -1,0 +1,26 @@
+{
+  "name": "fbgweb",
+  "version": "1.0.0",
+  "dependencies": {
+    "setuptools": {
+      "version": ">=42.0.0",
+      "remove": false
+    },
+    "python-dotenv": {
+      "version": "==1.0.0",
+      "remove": false
+    },
+    "Jinja2": {
+      "version": "==3.1.2",
+      "remove": false
+    },
+    "websockets": {
+      "version": ">=10.0",
+      "remove": false
+    },
+    "fbgrouter": { 
+    "version": "==0.1.0", 
+    "remove": false
+  }
+  }
+}
